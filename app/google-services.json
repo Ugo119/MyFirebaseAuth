@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "266214697216",
+    "firebase_url": "https://ugoconsulting-e9c14.firebaseio.com",
+    "project_id": "ugoconsulting-e9c14",
+    "storage_bucket": "ugoconsulting-e9c14.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266214697216:android:c877708955af33eb35ebe5",
+        "android_client_info": {
+          "package_name": "com.ugo.android.ugoconsulting"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "266214697216-vm6nbs4f54t37pdmmlq3360t09vl86lu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ugo.android.ugoconsulting",
+            "certificate_hash": "be1e16015e99819a7085709ace464550d06e9c8d"
+          }
+        },
+        {
+          "client_id": "266214697216-uu4flfojd11f8cj4vqvl0vjk48jfit76.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjlasPi3n6yMIT2CI5qD9cFtBG7ytwXJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "266214697216-uu4flfojd11f8cj4vqvl0vjk48jfit76.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
