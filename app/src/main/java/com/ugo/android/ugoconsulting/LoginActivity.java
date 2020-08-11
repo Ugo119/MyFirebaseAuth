@@ -83,75 +83,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         resendEmailVerification.setOnClickListener(this);
         logout.setOnClickListener(this);
 
-       /* signIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //check if the fields are filled out
-                if(!isEmpty(mEmail.getText().toString())
-                        && !isEmpty(mPassword.getText().toString())){
-                    Log.d(TAG, "onClick: attempting to authenticate.");
-
-                    showDialog();
-
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(mEmail.getText().toString(),
-                            mPassword.getText().toString())
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    hideDialog();
-
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-                            hideDialog();
-                        }
-                    });
-
-                }else{
-                    Toast.makeText(LoginActivity.this, "You didn't fill in all the fields.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
-
-
-       /* googleSignInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-            }
-        });*/
-
-       /* TextView register = (TextView) findViewById(R.id.link_register);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        TextView resetPassword = (TextView) findViewById(R.id.forgot_password);
-        resetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        TextView resendEmailVerification = (TextView) findViewById(R.id.resend_verification_email);
-        resendEmailVerification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });*/
-
         hideSoftKeyboard();
-
     }
 
     /**
@@ -164,12 +96,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
-    private void showDialog(){
+    private void showDialog() {
         mProgressBar.setVisibility(View.VISIBLE);
 
     }
 
-    private void hideDialog(){
+    private void hideDialog() {
         if(mProgressBar.getVisibility() == View.VISIBLE){
             mProgressBar.setVisibility(View.INVISIBLE);
         }
