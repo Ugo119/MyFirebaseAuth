@@ -40,12 +40,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int RC_SIGN_IN = 1;
 
     //Firebase
+    //Class used to retrieve the authentication state: authenticated || not authenticated
     private FirebaseAuth.AuthStateListener mAuthListener;
-
 
     // widgets
     private EditText mEmail, mPassword;
     private ProgressBar mProgressBar;
+
     GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -56,10 +57,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mPassword = (EditText) findViewById(R.id.password);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        //Call method so that listener can actively listen to auth state.
         setupFirebaseAuth();
 
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // Integrate Google Sign-In into the app
+        //You must pass your server's client ID to the requestIdToken.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -131,6 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
        /* FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
 
