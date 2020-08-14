@@ -126,6 +126,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Log.d(TAG, "onAuthStateChanged SIGNEDIN: " + user.getUid());
                         Toast.makeText(LoginActivity.this, "Authenticated with: " +
                                 user.getEmail(), Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(LoginActivity.this, SignedInActivity.class);
+                        startActivity(intent);
+
+                        //In order to prevent user from navigating back to login screen, call finish()
+                        finish();
 
                     } else {
                         Toast.makeText(LoginActivity.this, "Check Your Email for a Verification Link",
@@ -145,7 +150,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
         FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        //FirebaseAuth mAuth = FirebaseAuth.getInstance();
        /* FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
 
         // Check for existing Google Sign In account, if the user is already signed in
@@ -153,8 +158,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
         updateUI(account);*/
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
     }
 
     @Override
@@ -218,6 +223,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+        Intent intent = new Intent(LoginActivity.this, SignedInActivity.class);
+        startActivity(intent);
     }
 
     public void signOut() {
