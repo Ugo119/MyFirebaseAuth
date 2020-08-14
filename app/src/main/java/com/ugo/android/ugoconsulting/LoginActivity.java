@@ -122,7 +122,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null) {
-                    Log.d(TAG, "onAuthStateChanged SIGNEDIN: " + user.getUid());
+                    if(user.isEmailVerified()) {
+                        Log.d(TAG, "onAuthStateChanged SIGNEDIN: " + user.getUid());
+                        Toast.makeText(LoginActivity.this, "Authenticated with: " +
+                                user.getEmail(), Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Check Your Email for a Verification Link",
+                                Toast.LENGTH_SHORT).show();
+                        hideDialog();
+                        FirebaseAuth.getInstance().signOut();
+                    }
+
                 }else{
                     Log.d(TAG, "onAuthStateChanged SIGNEDOUT: ");
                 }
@@ -195,6 +206,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.forgot_password:
                 break;
             case R.id.resend_verification_email:
+                ResendVerificationDialog dialog = new ResendVerificationDialog();
+                dialog.show(getSupportFragmentManager(), "dialog_resend_email_verification");
                 break;
             case R.id.logout:
                 signOut();
