@@ -18,6 +18,9 @@
         <activity android:name=".RegisterActivity">
 
         </activity>
+        <activity android:name=".SignedInActivity">
+
+        </activity>
     </application>
 
 </manifest>

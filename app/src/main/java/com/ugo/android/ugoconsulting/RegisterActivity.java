@@ -59,8 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
                         //check if passwords match
                         if(doStringsMatch(mPassword.getText().toString(), mConfirmPassword.getText().toString())){
                             registerNewEmail(mEmail.getText().toString(), mPassword.getText().toString());
-                            redirectLoginScreen();
-
 
                         }else{
                             Toast.makeText(RegisterActivity.this, "Passwords do not Match", Toast.LENGTH_SHORT).show();
@@ -101,8 +99,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerNewEmail(String email, String password) {
         showDialog();
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(
-                new OnCompleteListener<AuthResult>() {
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "onComplete: " + task.isSuccessful());
@@ -110,9 +108,16 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             Log.d(TAG, "onComplete AuthState: " + FirebaseAuth.getInstance().getCurrentUser()
                             .getUid());
+
+                            //send email verification
                             sendVerificationEmail();
+
                             FirebaseAuth.getInstance().signOut();
-                        }else{
+
+                            //redirect the user to the login screen
+                            redirectLoginScreen();
+                        }
+                        if (!task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Unable to Register, ",
                                      Toast.LENGTH_LONG).show();
                         }
@@ -123,7 +128,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * Returns True if the user's email contains '@tabian.ca'
+     * Returns True if the user's email contains '@gmail.com' or @yahoo.com
      * @param email
      * @return
      */
@@ -131,7 +136,9 @@ public class RegisterActivity extends AppCompatActivity {
         Log.d(TAG, "isValidDomain: verifying email has correct domain: " + email);
         String domain = email.substring(email.indexOf("@") + 1).toLowerCase();
         Log.d(TAG, "isValidDomain: users domain: " + domain);
+
         return domain.equals(DOMAIN_NAME);
+
     }
 
     /**

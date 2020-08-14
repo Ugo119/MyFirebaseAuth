@@ -58,8 +58,6 @@ public class ResendVerificationDialog extends DialogFragment {
                 }else{
                     Toast.makeText(mContext, "all fields must be filled out", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
@@ -77,8 +75,8 @@ public class ResendVerificationDialog extends DialogFragment {
 
     private void authenticateAndResendEmail(String email, String password) {
         AuthCredential credential = EmailAuthProvider.getCredential(email, password);
-        FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(
-                new OnCompleteListener<AuthResult>() {
+        FirebaseAuth.getInstance().signInWithCredential(credential)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
@@ -96,10 +94,7 @@ public class ResendVerificationDialog extends DialogFragment {
                 getDialog().dismiss();
             }
         });
-
     }
-
-
 
     /**
      * sends an email verification link to the user
@@ -123,7 +118,6 @@ public class ResendVerificationDialog extends DialogFragment {
         }
 
     }
-
     /**
      * Return true if the @param is null
      * @param string
@@ -132,7 +126,6 @@ public class ResendVerificationDialog extends DialogFragment {
     private boolean isEmpty(String string){
         return string.equals("");
     }
-
 
 }
 
