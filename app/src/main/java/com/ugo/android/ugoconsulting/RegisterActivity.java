@@ -19,6 +19,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -78,6 +79,26 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
+    private void sendVerificationEmail() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (user != null) {
+            user.sendEmailVerification()
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(RegisterActivity.this, "Sent Verification Email",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(RegisterActivity.this, "Couldn't send Verification Email",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
+
     private void registerNewEmail(String email, String password) {
         showDialog();
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password).addOnCompleteListener(
@@ -89,6 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
                         if(task.isSuccessful()) {
                             Log.d(TAG, "onComplete AuthState: " + FirebaseAuth.getInstance().getCurrentUser()
                             .getUid());
+                            sendVerificationEmail();
                             FirebaseAuth.getInstance().signOut();
                         }else{
                             Toast.makeText(RegisterActivity.this, "Unable to Register, ",

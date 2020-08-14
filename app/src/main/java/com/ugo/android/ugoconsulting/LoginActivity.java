@@ -40,12 +40,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int RC_SIGN_IN = 1;
 
     //Firebase
+    //Class used to retrieve the authentication state: authenticated || not authenticated
     private FirebaseAuth.AuthStateListener mAuthListener;
-
 
     // widgets
     private EditText mEmail, mPassword;
     private ProgressBar mProgressBar;
+
     GoogleSignInClient mGoogleSignInClient;
 
     @Override
@@ -56,10 +57,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mPassword = (EditText) findViewById(R.id.password);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        //Call method so that listener can actively listen to auth state.
         setupFirebaseAuth();
 
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // Integrate Google Sign-In into the app
+        //You must pass your server's client ID to the requestIdToken.
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -120,7 +122,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if(user != null) {
-                    Log.d(TAG, "onAuthStateChanged SIGNEDIN: " + user.getUid());
+                    if(user.isEmailVerified()) {
+                        Log.d(TAG, "onAuthStateChanged SIGNEDIN: " + user.getUid());
+                        Toast.makeText(LoginActivity.this, "Authenticated with: " +
+                                user.getEmail(), Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Check Your Email for a Verification Link",
+                                Toast.LENGTH_SHORT).show();
+                        hideDialog();
+                        FirebaseAuth.getInstance().signOut();
+                    }
+
                 }else{
                     Log.d(TAG, "onAuthStateChanged SIGNEDOUT: ");
                 }
@@ -131,6 +144,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onStart() {
         super.onStart();
+        FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
        /* FirebaseAuth.getInstance().addAuthStateListener(mAuthListener);
 
@@ -192,6 +206,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.forgot_password:
                 break;
             case R.id.resend_verification_email:
+                ResendVerificationDialog dialog = new ResendVerificationDialog();
+                dialog.show(getSupportFragmentManager(), "dialog_resend_email_verification");
                 break;
             case R.id.logout:
                 signOut();
