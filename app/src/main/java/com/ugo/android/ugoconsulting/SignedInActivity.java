@@ -28,6 +28,8 @@ public class SignedInActivity extends AppCompatActivity {
 
     // widgets and UI References
 
+
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +37,10 @@ public class SignedInActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: started.");
 
         setupFirebaseAuth();
+
     }
 
+    
     @Override
     protected void onResume() {
         super.onResume();
@@ -60,6 +64,8 @@ public class SignedInActivity extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.options_menu, menu);
@@ -68,14 +74,23 @@ public class SignedInActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.optionSignOut:
-                signOut();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public boolean onOptionsItemSelected(MenuItem item) {       
+            
+                switch (item.getItemId()){
+                    case R.id.optionSignOut:
+                        Log.d(TAG, "onOptionsItemSelected: SIGNOUT");
+                        signOut();
+                        return true;
+                    case R.id.optionAccountSettings:
+                        Log.d(TAG, "onOptionsItemSelected: BEFORE_CRASH");
+                        Intent intent = new Intent(SignedInActivity.this, SettingsActivity.class);
+                        startActivity(intent);
+                        Log.d(TAG, "onOptionsItemSelected: AFTER_CRASH");
+                        return true;
+                    default:
+                        return super.onOptionsItemSelected(item);
+                }       
+        
     }
 
     /**
@@ -125,5 +140,7 @@ public class SignedInActivity extends AppCompatActivity {
             FirebaseAuth.getInstance().removeAuthStateListener(mAuthListener);
         }
     }
+
+
 
 }

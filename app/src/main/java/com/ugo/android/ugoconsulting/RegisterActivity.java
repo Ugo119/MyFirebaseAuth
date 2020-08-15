@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
                     if(isValidDomain(mEmail.getText().toString())){
 
                         //check if passwords match
-                        if(doStringsMatch(mPassword.getText().toString(), mConfirmPassword.getText().toString())){
+                        if(passwordMatch.test(mPassword.getText().toString(), mConfirmPassword.getText().toString())){
                             registerNewEmail(mEmail.getText().toString(), mPassword.getText().toString());
 
                         }else{
@@ -157,9 +157,12 @@ public class RegisterActivity extends AppCompatActivity {
      * @param s2
      * @return
      */
-    private boolean doStringsMatch(String s1, String s2){
+
+    PasswordMatch passwordMatch = String::equals;
+
+    /*private boolean doStringsMatch(String s1, String s2){
         return s1.equals(s2);
-    }
+    }*/
 
     /**
      * Return true if the @param is null
