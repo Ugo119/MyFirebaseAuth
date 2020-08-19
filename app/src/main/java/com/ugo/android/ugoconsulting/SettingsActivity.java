@@ -121,6 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
                             Log.d(TAG, "onComplete: Password Reset Email sent.");
                             Toast.makeText(SettingsActivity.this, "Sent Password Reset Link to Email",
                                     Toast.LENGTH_SHORT).show();
+                            mAuth.signOut();
                         }else{
                             Log.d(TAG, "onComplete: No user associated with that email.");
 
