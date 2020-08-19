@@ -209,6 +209,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(intent);
                 break;
             case R.id.forgot_password:
+                PasswordResetDialog passwordResetDialog = new PasswordResetDialog();
+                passwordResetDialog.show(getSupportFragmentManager(), "dialog_password_reset");
                 break;
             case R.id.resend_verification_email:
                 ResendVerificationDialog dialog = new ResendVerificationDialog();
